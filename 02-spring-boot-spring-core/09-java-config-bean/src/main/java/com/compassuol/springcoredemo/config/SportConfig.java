@@ -16,8 +16,11 @@ public class SportConfig {
     Por padrão, beans que usam @Bean são criados dentro de classes do tipo @Configuration
 
     No caso abaixo o nome do nosso método (swimCoach) é o nome do nosso Bean ID
+
+    @Bean("ID")
+    Podemos mudar o ID do nosso Bean como abaixo, para aquatic
      */
-    @Bean
+    @Bean("aquatic")
     public Coach swimCoach() {
         return new SwinCoach();
     }
