@@ -24,13 +24,13 @@ public class CruddemoApplication {
 		// Assim que os Beans forem carregados nosso código irá executar os comandos abaixo
 		return runner -> {
 			// createStudent(studentDAO);
-			// createMultipleStudents(studentDAO);
+			createMultipleStudents(studentDAO);
 			// readStudent(studentDAO);
 			// queryForStudents(studentDAO);
 			// queryForStudentsByLastName(studentDAO);
 			// updateStudent(studentDAO);
 			// deleteStudent(studentDAO);
-			deleteAllStudents(studentDAO);
+			// deleteAllStudents(studentDAO);
 		};
 	}
 
@@ -115,7 +115,6 @@ public class CruddemoApplication {
 	}
 	*/
 
-	/*
 	private void createMultipleStudents(StudentDAO studentDAO) {
 		System.out.println("Creating 3 student objects...");
 		Student tempStudent1 = new Student("John", "Doe", "john@gmail.com");
@@ -131,7 +130,6 @@ public class CruddemoApplication {
 		System.out.println("Saved Student. Generated id: " + tempStudent2.getId());
 		System.out.println("Saved Student. Generated id: " + tempStudent3.getId());
 	}
-	*/
 
 	/*
 	// Aqui é onde iremos salvar / criar nosso Student
