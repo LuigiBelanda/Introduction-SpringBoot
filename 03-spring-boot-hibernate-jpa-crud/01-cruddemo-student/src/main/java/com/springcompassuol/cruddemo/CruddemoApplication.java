@@ -27,10 +27,29 @@ public class CruddemoApplication {
 			// createMultipleStudents(studentDAO);
 			// readStudent(studentDAO);
 			// queryForStudents(studentDAO);
-			queryForStudentsByLastName(studentDAO);
+			// queryForStudentsByLastName(studentDAO);
+			updateStudent(studentDAO);
 		};
 	}
 
+	private void updateStudent(StudentDAO studentDAO) {
+		// Retrieve student based on the id: PK
+		int studentId = 1;
+		System.out.println("getting student with id: " + studentId);
+		Student myStudent = studentDAO.findById(studentId);
+
+		// Change first name to "Scooby"
+		System.out.println("Updating student...");
+		myStudent.setFirstName("Scooby");
+
+		// Update the Student
+		studentDAO.update(myStudent);
+
+		// Display the updated student
+		System.out.println("Update student: " + myStudent);
+	}
+
+	/*
 	private void queryForStudentsByLastName(StudentDAO studentDAO) {
 		// Get a list of students
 		// Aqui chamamos nosso método findByLastName e passamos como param o lastName que queremos pesquisar
@@ -41,6 +60,7 @@ public class CruddemoApplication {
 			System.out.println(tempStudent);
 		}
 	}
+	*/
 
 	/*
 	private void queryForStudents(StudentDAO studentDAO) {
