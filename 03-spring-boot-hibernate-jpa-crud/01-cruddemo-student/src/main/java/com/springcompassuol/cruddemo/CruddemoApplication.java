@@ -26,10 +26,23 @@ public class CruddemoApplication {
 			// createStudent(studentDAO);
 			// createMultipleStudents(studentDAO);
 			// readStudent(studentDAO);
-			queryForStudents(studentDAO);
+			// queryForStudents(studentDAO);
+			queryForStudentsByLastName(studentDAO);
 		};
 	}
 
+	private void queryForStudentsByLastName(StudentDAO studentDAO) {
+		// Get a list of students
+		// Aqui chamamos nosso método findByLastName e passamos como param o lastName que queremos pesquisar
+		List<Student> theStudents = studentDAO.findByLastName("Duck");
+
+		// Display list of students
+		for (Student tempStudent : theStudents) {
+			System.out.println(tempStudent);
+		}
+	}
+
+	/*
 	private void queryForStudents(StudentDAO studentDAO) {
 		// Get list of students
 		List<Student> theStudents = studentDAO.findAll();
@@ -39,6 +52,7 @@ public class CruddemoApplication {
 			System.out.println(tempStudent);
 		}
 	}
+	*/
 
 	/*
 	private void readStudent(StudentDAO studentDAO) {

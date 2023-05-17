@@ -52,7 +52,25 @@ public class StudentDAOImpl implements StudentDAO {
         // Por isso colocamos ali "FROM Student", pois Student é o nome da nossa Entity Class
         // Também usamos lastName em vez de last_name (como está no BD) pois aqui usamos como base
         // Os nomes dos atributos da nossa Entity Class
-        TypedQuery<Student> theQuery = entityManager.createQuery("FROM Student order by lastName desc", Student.class);
+        TypedQuery<Student> theQuery = entityManager.createQuery("FROM Student", Student.class);
+
+        // Return query results
+        return theQuery.getResultList();
+    }
+
+
+
+    @Override
+    public List<Student> findByLastName(String theLastName) {
+        // Create query
+        // Note que usamos ":theData", isso significa um parâmetro que iremos passar depois para nossa query
+        // E deixamos com os ":" para o JPQL saber que este é um parâmetro
+        TypedQuery<Student> theQuery = entityManager.createQuery("FROM Student WHERE lastName=:theData", Student.class);
+
+        // Set query parameters
+        // Aqui passamos para nossa Query o deve ser colocado no lugar do :theData
+        // Aqui passamos o nosso dado
+        theQuery.setParameter("theData", theLastName);
 
         // Return query results
         return theQuery.getResultList();
