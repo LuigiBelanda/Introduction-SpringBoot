@@ -50,7 +50,9 @@ public class StudentDAOImpl implements StudentDAO {
         // Neste caso para realizarmos nossa query usamos o nome de nossa classe
         // E dos atributos de nossa classe e não o nome da nossa tabela no banco e seus campos
         // Por isso colocamos ali "FROM Student", pois Student é o nome da nossa Entity Class
-        TypedQuery<Student> theQuery = entityManager.createQuery("FROM Student", Student.class);
+        // Também usamos lastName em vez de last_name (como está no BD) pois aqui usamos como base
+        // Os nomes dos atributos da nossa Entity Class
+        TypedQuery<Student> theQuery = entityManager.createQuery("FROM Student order by lastName desc", Student.class);
 
         // Return query results
         return theQuery.getResultList();
