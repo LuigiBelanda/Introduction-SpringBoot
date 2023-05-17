@@ -22,15 +22,38 @@ public class CruddemoApplication {
 		// Assim que os Beans forem carregados nosso código irá executar os comandos abaixo
 		return runner -> {
 			// createStudent(studentDAO);
-			createMultipleStudents(studentDAO);
+			// createMultipleStudents(studentDAO);
+			readStudent(studentDAO);
 		};
 	}
 
+	private void readStudent(StudentDAO studentDAO) {
+		// Create a student object
+		System.out.println("Creating a new student object...");
+		Student tempStudent = new Student("Daffy", "Duck", "daffyduck@gmail.com");
+
+		// Save the student
+		System.out.println("Saving the student...");
+		studentDAO.save(tempStudent);
+
+		// Display id
+		int theId = tempStudent.getId();
+		System.out.println("Saved Student. Generated id: " + theId);
+
+		// Return student based on the id: PK
+		System.out.println("Retrieving student with id: " + theId);
+		Student myStudent = studentDAO.findById(theId);
+
+		// Display student
+		System.out.println("Found the student: " + myStudent);
+	}
+
+	/*
 	private void createMultipleStudents(StudentDAO studentDAO) {
 		System.out.println("Creating 3 student objects...");
 		Student tempStudent1 = new Student("John", "Doe", "john@gmail.com");
 		Student tempStudent2 = new Student("Sarra", "Doe", "sarra@gmail.com");
-		Student tempStudent3 = new Student("Jessica", "Doe", "Jessica@gmail.com");
+		Student tempStudent3 = new Student("Jessica", "Doe", "jessica@gmail.com");
 
 		System.out.println("Saving the students...");
 		studentDAO.save(tempStudent1);
@@ -41,7 +64,9 @@ public class CruddemoApplication {
 		System.out.println("Saved Student. Generated id: " + tempStudent2.getId());
 		System.out.println("Saved Student. Generated id: " + tempStudent3.getId());
 	}
+	*/
 
+	/*
 	// Aqui é onde iremos salvar / criar nosso Student
 	private void createStudent(StudentDAO studentDAO) {
 		// Create the student object
@@ -59,4 +84,5 @@ public class CruddemoApplication {
 		// Display id of the saved student
 		System.out.println("Saved Student. Generated id: " + tempStudent.getId());
 	}
+	*/
 }
