@@ -2,9 +2,12 @@ package com.springcompassuol.cruddemo.dao;
 
 import com.springcompassuol.cruddemo.entity.Student;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Repository
 public class StudentDAOImpl implements StudentDAO {
@@ -36,5 +39,20 @@ public class StudentDAOImpl implements StudentDAO {
         // Student.class - Entity class
         // id - PK
         return entityManager.find(Student.class, id);
+    }
+
+
+
+    // read all student method
+    @Override
+    public List<Student> findAll() {
+        // Create query
+        // Neste caso para realizarmos nossa query usamos o nome de nossa classe
+        // E dos atributos de nossa classe e não o nome da nossa tabela no banco e seus campos
+        // Por isso colocamos ali "FROM Student", pois Student é o nome da nossa Entity Class
+        TypedQuery<Student> theQuery = entityManager.createQuery("FROM Student", Student.class);
+
+        // Return query results
+        return theQuery.getResultList();
     }
 }
