@@ -2,10 +2,9 @@ package com.compassuol.demo.rest;
 
 import com.compassuol.demo.entity.Student;
 import jakarta.annotation.PostConstruct;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +60,36 @@ public class StudentRestController {
     */
     @GetMapping("/students/{studentId}")
     public Student getStudent(@PathVariable int studentId) {
+        // Aqui verificamos se o Id existe ou não, se ele estiver fora
+        // Do tamanho da List, ele já não existe neste caso
+        if ((studentId >= theStudents.size()) || (studentId < 0)) {
+            throw new StudentNotFoundException("Student id not found - " + studentId);
+        }
+
         return theStudents.get(studentId);
     }
+
+    // Add an exception handler using @ExceptionHandler
+    /*
+    *   @ExceptionHandler - Anotação para lidar com exceções em classes de manipulador específicas e/ou métodos de manipulador.
+    *   ResponseEntity - Extensão de HttpEntity que adiciona um código de status HttpStatusCode. Usado em RestTemplate, bem como em métodos @Controller.
+    *   ResponseEntity representa toda a resposta HTTP: código de status, cabeçalhos e corpo. Como resultado, podemos usá-lo para configurar totalmente a resposta HTTP.
+    *   <StudentErrorResponse> - Tipo do corpo do response (os campos que definimos na Classe é o que iremos retornar)
+    *   handleException(StudentNotFoundException exc) - Neste caso o StudentNotFoundException é o tipo de exceção que iremos lançar / tratar apenas
+    */
+    @ExceptionHandler
+    public ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundException exc) {
+        // Create a StudentErrorResponse
+        StudentErrorResponse error = new StudentErrorResponse();
+
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setMessage(exc.getMessage());
+        error.setTimeStamp(System.currentTimeMillis());
+
+        // Return ResponseEntity
+        // error - body
+        // HttpStatus - Status
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
 }
