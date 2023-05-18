@@ -11,6 +11,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class StudentRestController {
+    /*
+    *   Aqui nosso REST Service irá retornar uma List de students
+    *   Algo que não conseguimos passar direto para nosso REST Cliente (quem fez a request)
+    *   Então é aqui que entra o Jackson (o Spring e o Jackson Trabalham juntos),
+    *   onde ele converte a nossa List em JSON, mais
+    *   Especificamente POJO -> JSON e ai sim envia esses dados para quem fez a request
+    */
     @GetMapping("/students")
     public List<Student> getStudents() {
         List<Student> theStudents = new ArrayList<>();
