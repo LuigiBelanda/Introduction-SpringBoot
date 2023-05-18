@@ -1,6 +1,7 @@
 package com.compassuol.demo.rest;
 
 import com.compassuol.demo.entity.Student;
+import jakarta.annotation.PostConstruct;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +12,24 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class StudentRestController {
+    private  List<Student> theStudents;
+
+    /*
+    *   Define @PostConstruct to load the student data... only once!
+    *   Assim que o Spring começar a gerenciar esse Bean / Class (StudentRestController)
+    *   E Instanciar ele, após esse processo, é chamado nosso @PostConstruct que irá
+    *   Executar o código que desejamos
+    */
+    @PostConstruct
+    public void loadData() {
+        theStudents = new ArrayList<>();
+
+        theStudents.add(new Student("Porrnima", "Patel"));
+        theStudents.add(new Student("Mario", "Rossi"));
+        theStudents.add(new Student("Mary", "Smith"));
+    }
+
+
     /*
     *   Aqui nosso REST Service irá retornar uma List de students
     *   Algo que não conseguimos passar direto para nosso REST Cliente (quem fez a request)
@@ -20,12 +39,6 @@ public class StudentRestController {
     */
     @GetMapping("/students")
     public List<Student> getStudents() {
-        List<Student> theStudents = new ArrayList<>();
-
-        theStudents.add(new Student("Porrnima", "Patel"));
-        theStudents.add(new Student("Mario", "Rossi"));
-        theStudents.add(new Student("Mary", "Smith"));
-
         return theStudents;
     }
 }
