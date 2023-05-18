@@ -3,6 +3,7 @@ package com.compassuol.demo.rest;
 import com.compassuol.demo.entity.Student;
 import jakarta.annotation.PostConstruct;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,5 +41,26 @@ public class StudentRestController {
     @GetMapping("/students")
     public List<Student> getStudents() {
         return theStudents;
+    }
+
+    // Define endpoint or "/students/{studentId}" - return student at index
+    /*
+    *   Aqui como temos uma variável sendo passada na URL de request
+    *   Temos que tratar isso e ver o que vamos fazer
+    *   No caso a nossa URL a variável está identificada como {studentId}
+    *   Então iremos receber um int na request "/students/1"
+    *   Para isso no nosso método temos que usar a nossa annotation @PathVariable
+    *   Dizer de qual tipo ela é e usar o MESMO NOME que usamos no @GetMapping para a variável
+    *
+    *   {studentId} - URL param
+    *   int studentId - Method parma
+    *
+    *   Note que o nome de ambos os params é igual e deve ser assim
+    *   Por fim neste caso iremos retornar apenas os dados do Student
+    *   Que tiver o ID na List igual ao que foi enviado na request
+    */
+    @GetMapping("/students/{studentId}")
+    public Student getStudent(@PathVariable int studentId) {
+        return theStudents.get(studentId);
     }
 }
