@@ -92,4 +92,28 @@ public class StudentRestController {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
+    // Add another exception handler... to catch any exceptions
+    /*
+    *   Podemos notar que dessa vemos usamos apenas um "Exception" para
+    *   Determinar o tipo de exceção que iremos pegar / tratar
+    *   No anterior tinhamos um tipo definido, StudentNotFoundException
+    *   Ou seja, se uma exceção for lançada com o tipo acima
+    *   Iremos mandar a mensagem que definimos acima
+    *   Caso contrário, qualquer exceção que for lançada, iremos retornar uma mensagem
+    *   Por meio do código abaixo
+    */
+    @ExceptionHandler
+    public ResponseEntity<StudentErrorResponse> handlerException(Exception exc) {
+        // Create a StudentErrorResponse
+        StudentErrorResponse error = new StudentErrorResponse();
+
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.setMessage(exc.getMessage());
+        error.setTimeStamp(System.currentTimeMillis());
+
+        // Return ResponseEntity
+        // error - body
+        // HttpStatus - Status
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
 }
