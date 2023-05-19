@@ -7,10 +7,21 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class DemoSecurityConfig {
+    // Add support for JDBC ... no more hardcoded users
+    @Bean
+    public UserDetailsManager userDetailsManager(DataSource dataSource) {
+        return new JdbcUserDetailsManager(dataSource);
+    }
+
+    /*
     @Bean
     public InMemoryUserDetailsManager userDetailsManager() {
 
@@ -36,6 +47,7 @@ public class DemoSecurityConfig {
 
         return new InMemoryUserDetailsManager(john, mary, susan);
     }
+    */
 
     // Após criamos nossos users para garantir um acesso seguro as rotas
     // Agora iremos adicionar um filtro nas rotas, permitindo apenas alguns users acessar
