@@ -18,7 +18,24 @@ public class DemoSecurityConfig {
     // Add support for JDBC ... no more hardcoded users
     @Bean
     public UserDetailsManager userDetailsManager(DataSource dataSource) {
-        return new JdbcUserDetailsManager(dataSource);
+        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
+
+        /*
+        *   O código abaixo serve para configurar os usuários e acessos que eles tem
+        *   Pois não estamos usando o schema padrão que o Spring entende para pegar os dados
+        *   Dos nossos usuário e quais os seus acessos liberado no banco de dados
+        *   Então temos que adicionar o código abaixo para ele conseguir pegar as infos
+        *   Das tabelas que estamos usando
+        */
+
+        // Define query to retrieve a user by username
+        // Using a regular SQL
+        jdbcUserDetailsManager.setUsersByUsernameQuery("select user_id, pw, active from members where user_id=?");
+
+        // Define query to retrieve the authorities/roles by username
+        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("select user_id, role from roles where user_id=?");
+
+        return jdbcUserDetailsManager;
     }
 
     /*
